@@ -26,6 +26,8 @@
 */
 
 
+$config =  parse_ini_file('config.ini');
+
 function proposicao_init() {
 
 $labels = array(
@@ -70,6 +72,7 @@ register_post_type( 'proposicao', $args );
 /* Define campos do form */
 
 function proposicao_acf_init() {
+    global $config;
     if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array (
@@ -449,6 +452,17 @@ acf_add_local_field_group(array (
             'toggle' => 0,
             'return_format' => 'label',
         ),
+        array(
+            'key'           => 'field_recaptcha',
+            'name'          => 'recaptcha',
+            'type'          => 'recaptcha',
+            'label'         => 'Verifique que você não é um robo!',
+            'site_key'      => $config['recaptcha_site'],
+            'secret_key'    => $config['recaptcha_secret'],
+            're_theme'      => 'light',     // Other options: 'dark'
+            're_type'       => 'image',     // Other options: 'audio'
+            're_size'       => 'normal',    // Other options: 'compact'
+        )
     ),
     'location' => array (
             array (

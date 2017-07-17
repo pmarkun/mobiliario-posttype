@@ -29,6 +29,7 @@ get_header();
         'post_id'       => 'new_post',
         'post_title'    => true,
         'post_content'  => false,
+        'recaptcha' => true,
         'new_post'      => array(
             'post_type'     => 'proposicao',
             'post_status'   => 'draft'

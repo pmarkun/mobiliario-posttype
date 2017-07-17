@@ -1,0 +1,5 @@
+[RECAPTCHA]
+;Configure seu dominio -> https://www.google.com/recaptcha/
+
+recaptcha_site = 'RECAPTCHA SITE KEY'
+recaptcha_secret = 'RECAPTCHA SITE SECRET'
