@@ -60,6 +60,7 @@ $args = array(
         'Hierarchical'       => false,
         'menu_position'      => null,
         'supports'           => array( 'title', 'editor', 'author', 'excerpt', 'custom-fields' ),
+        'taxonomies'  => array( 'category' ),
     );
 
 
@@ -438,14 +439,30 @@ function mobiliario_template_archive_init($archive_template){
   return $archive_template;
 }
 
+function mobiliario_register_style() {
+    wp_register_style('mobiliario_form', plugins_url('templates/mobiliario.css',__FILE__ ));
+}
 
-wp_register_style('mobiliario_form', plugins_url('templates/mobiliario.css',__FILE__ ));
+function query_post_type($query) {
+  if( is_category() ) {
+    $post_type = get_query_var('post_type');
+    if($post_type)
+        $post_type = $post_type;
+    else
+        $post_type = array('nav_menu_item', 'post', 'mobiliario'); // don't forget nav_menu_item to allow menus to work!
+    $query->set('post_type',$post_type);
+    return $query;
+    }
+}
+
 
 /* Inicia ações */
 add_action( 'init', 'mobiliario_init' );
 add_action( 'wp', 'mobiliario_page_init' );
 add_action('acf/init', 'mobiliario_acf_init');
+add_action( 'wp_enqueue_scripts', 'mobiliario_register_style' );
 add_filter('single_template','mobiliario_template_single_init', 99,1);
 add_filter('archive_template','mobiliario_template_archive_init', 99,1);
+add_filter('pre_get_posts', 'query_post_type');
 
 ?>
